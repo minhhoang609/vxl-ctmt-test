@@ -1,20 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Tên Tựa Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2e2e2e;
+            color: #f0f0f0;
+            text-align: center;
+        }
+        header {
+            background-color: #1c1c1c;
+            padding: 20px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        section {
+            padding: 20px;
+        }
+        .game-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+        .download-btn {
+            background-color: #ff6347;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h1>Quiz App</h1>
-        <div id="question-container">
-            <div id="question">Câu hỏi sẽ hiển thị ở đây</div>
-            <div id="answer-buttons" class="btn-container"></div>
-        </div>
-        <button id="next-button" class="btn">Câu hỏi tiếp theo</button>
-    </div>
-    <script src="script.js"></script>
+    <header>
+        <h1>Tên Tựa Game</h1>
+    </header>
+    <section>
+        <h2>Giới thiệu</h2>
+        <p>Tựa game này là một cuộc phiêu lưu kỳ thú qua các vùng đất mới lạ, nơi bạn sẽ gặp gỡ những sinh vật huyền bí và tham gia vào các trận chiến hấp dẫn.</p>
+        <img src="game-image-url.jpg" alt="Tên Tựa Game" class="game-image">
+        <h2>Tính năng</h2>
+        <ul>
+            <li>Đồ họa tuyệt đẹp</li>
+            <li>Lối chơi sáng tạo</li>
+            <li>Hệ thống nhiệm vụ đa dạng</li>
+        </ul>
+        <h2>Tải về</h2>
+        <a href="download-link" class="download-btn">Tải game ngay</a>
+    </section>
 </body>
 </html>
