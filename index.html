@@ -3,54 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tên Tựa Game</title>
+    <title>Snake Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #2e2e2e;
-            color: #f0f0f0;
-            text-align: center;
-        }
-        header {
-            background-color: #1c1c1c;
-            padding: 20px;
-        }
-        header h1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
         }
-        section {
-            padding: 20px;
-        }
-        .game-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-        }
-        .download-btn {
-            background-color: #ff6347;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
+        canvas {
+            border: 1px solid #fff;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Tên Tựa Game</h1>
-    </header>
-    <section>
-        <h2>Giới thiệu</h2>
-        <p>Tựa game này là một cuộc phiêu lưu kỳ thú qua các vùng đất mới lạ, nơi bạn sẽ gặp gỡ những sinh vật huyền bí và tham gia vào các trận chiến hấp dẫn.</p>
-        <img src="game-image-url.jpg" alt="Tên Tựa Game" class="game-image">
-        <h2>Tính năng</h2>
-        <ul>
-            <li>Đồ họa tuyệt đẹp</li>
-            <li>Lối chơi sáng tạo</li>
-            <li>Hệ thống nhiệm vụ đa dạng</li>
-        </ul>
-        <h2>Tải về</h2>
-        <a href="download-link" class="download-btn">Tải game ngay</a>
-    </section>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const box = 20;
+        const canvasSize = canvas.width / box;
+        let snake = [{ x: 10, y: 10 }];
+        let direction = 'RIGHT';
+        let food = {
+            x: Math.floor(Math.random() * canvasSize) * box,
+            y: Math.floor(Math.random() * canvasSize) * box
+        };
+
+        document.addEventListener('keydown', (event) => {
+            if (event.keyCode === 37 && direction !== 'RIGHT') direction = 'LEFT';
+            if (event.keyCode === 38 && direction !== 'DOWN') direction = 'UP';
+            if (event.keyCode === 39 && direction !== 'LEFT') direction = 'RIGHT';
+            if (event.keyCode === 40 && direction !== 'UP') direction = 'DOWN';
+        });
+
+        function draw() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i === 0) ? '#00ff00' : '#00cc00';
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeStyle = '#000';
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            ctx.fillStyle = '#ff0000';
+            ctx.fillRect(food.x, food.y, box, box);
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if (direction === 'LEFT') snakeX -= box;
+            if (direction === 'UP') snakeY -= box;
+            if (direction === 'RIGHT') snakeX += box;
+            if (direction === 'DOWN') snakeY += box;
+
+            if (snakeX === food.x && snakeY === food.y) {
+                food = {
+                    x: Math.floor(Math.random() * canvasSize) * box,
+                    y: Math.floor(Math.random() * canvasSize) * box
+                };
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
+            }
+
+            snake.unshift(newHead);
+        }
+
+        function collision(head, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (head.x === array[i].x && head.y === array[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        let game = setInterval(draw, 100);
+    </script>
 </body>
 </html>
